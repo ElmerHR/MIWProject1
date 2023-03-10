@@ -37,7 +37,8 @@ if conn is not None:
 
     # Adding bmi as new feature [bmi = mass / length^2]
     df['bmi'] = round(df['mass'] / (df['length']/100)**2,1)
-    # reorder columns to put lifespan at the end
+
+    # reorder columns to put lifespan at the end and get rid of "id"-column
     df_cleaned = df.reindex(columns=['genetic', 'length', 'mass', 'bmi', 'exercise', 'smoking', 'alcohol', 'sugar', 'lifespan'])
 
     # Calculating Interquartile Range [1.5] to remove mathematical outliers
@@ -46,13 +47,13 @@ if conn is not None:
     IQR = Q3 - Q1
     df_iqr_cleaned = df_cleaned[~((df_cleaned < (Q1 - 1.5 * IQR)) |(df_cleaned > (Q3 + 1.5 * IQR))).any(axis=1)]
 
-    # save dataframes to sqlite3 table
-    df_cleaned.to_sql('data_cleaned', con=conn, index=False)
-    df_iqr_cleaned.to_sql('data_iqr_cleaned', con=conn, index=False)
+    # save dataframes to sqlite3 table, replace data if table already exists
+    df_cleaned.to_sql('data_cleaned', con=conn, index=False, if_exists='replace')
+    df_iqr_cleaned.to_sql('data_iqr_cleaned', con=conn, index=False, if_exists='replace')
 
     # save to csv file
     df_cleaned.to_csv('build/data/data_cleaned.csv', index=False)
-    df_iqr_cleaned.to_csv('build/data/data_cleaned.csv', index=False)
+    df_iqr_cleaned.to_csv('build/data/data_iqr_cleaned.csv', index=False)
 
     conn.close()
     
