@@ -35,20 +35,21 @@ def index():
 @app.route('/predict')
 def predict():
     params = session.get('params')
-    params['bmi'] = params['mass'] / (params['length']/100)**2
-    params['mass_square'] = params['mass']**2
-    params['bmi_square'] = params['bmi']**2
-    params['exercise_sqrt'] = np.power(params['exercise'], 1/2)
-    params.pop('mass')
-    ic(params)
-    params_df = pd.DataFrame(params, index=[0])
+    params_copied = params.copy()
+    params_copied['bmi'] = params_copied['mass'] / (params_copied['length']/100)**2
+    params_copied['mass_square'] = params_copied['mass']**2
+    params_copied['bmi_square'] = params_copied['bmi']**2
+    params_copied['exercise_sqrt'] = np.power(params_copied['exercise'], 1/2)
+    params_copied.pop('mass')
+    ic(params_copied)
+    params_df = pd.DataFrame(params_copied, index=[0])
     params_df = params_df.reindex(columns=['genetic', 'length', 'bmi', 'exercise', 'smoking', 'alcohol', 'sugar', 'mass_square', 'bmi_square', 'exercise_sqrt'])
     print(params_df)
  
    
     prediction = pipe.predict(params_df)
     ic(prediction)
-    return render_template('predict.html')
+    return render_template('predict.html', params=params, prediction=prediction)
 
 if __name__ == "__main__":
     app.run()
