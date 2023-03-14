@@ -1,6 +1,45 @@
 {% extends 'base.html' %}
 {% block title %}Flask MakeITWork Project 1 Tryout{% endblock %}
 
+{% block js %}
+<script>
+    function getNewPrediction(param){
+        var req = new XMLHttpRequest()
+        req.onreadystatechange = function()
+        {
+            if (req.readyState == 4)
+            {
+                if (req.status != 200)
+                {
+                    //error handling code here
+                }
+                else
+                {
+                    var response = JSON.parse(req.responseText)
+                    document.getElementById('prediction').innerHTML = response['prediction'];
+                    document.getElementById('initialPrediction').classList.add('animation-initial-prediction');
+                    document.getElementById('newPrediction').classList.remove('hidden');
+                    document.getElementById('newPrediction').classList.add('animation-new-prediction');
+                    document.getElementById(param.name+'Change').classList.toggle('hidden');
+                }
+            }
+        }
+    
+        req.open('POST', '/ajax_prediction')
+        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        var parameter_name = param.name
+        var parameter_value = param.value
+        var postVars = 'parameter_name='+parameter_name+'&parameter_value='+parameter_value
+        req.send(postVars)
+        
+        return false
+    }
+    
+
+
+</script>
+{% endblock %}
+
 {% block content %}
 <section class="bg-gray-50">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"> <!-- md:h-screen -->
@@ -9,28 +48,50 @@
             Project 1 - Gezondheidszorg  
         </a>
         <div class="w-full bg-white rounded-lg shadow md:mt-0 xl:p-0">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <div class="flex items-center relative">
-                    
-                        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                            Lifespan prediction: {{prediction[0] | round(1)}} 
-                        </h1>
-
+            <div class="flex flex-row divide-x my-4">
+                <div class="container basis-1/2">
+                    <p class="ml-5 text-lg font-bold">Fixed data:</p>
+                    <div class="flex flex-col">
+                        <p class="px-10">Genetic: {{ params['genetic']}}</p>
+                        <p class="px-10">Length: {{ params['length']}}</p>
+                    </div>
+                    <div class="flex flex-col ml-5 mt-4">
+                        <p class="text-lg font-bold">Variable data:</p>
+                        <div class="container p-1"  x-data="{ mass: {{params['mass']}} }">
+                            <label class="block mb-2 text-sm font-medium text-gray-900" for="mass" x-text="`Mass: ` + mass">Mass: 80</label>
+                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="mass" max="180" min="50" name="mass" required="" step="0.1" type="range" value="{{params['mass']}}" x-model="mass" onchange="getNewPrediction(this)">
+                        </div>
+                        <div class="container p-1"  x-data="{ exercise: {{params['exercise']}} }">
+                            <label class="block mb-2 text-sm font-medium text-gray-900" for="exercise" x-text="`Exercise: ` + exercise">Exercise: 80</label>
+                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="exercise" max="6" min="0" name="exercise" required="" step="0.1" type="range" value="{{params['exercise']}}" x-model="exercise" onchange="getNewPrediction(this)">
+                        </div>
+                        <div class="container p-1"  x-data="{ alcohol: {{params['alcohol']}} }">
+                            <label class="block mb-2 text-sm font-medium text-gray-900" for="alcohol" x-text="`Alcohol: ` + alcohol">Alcohol: 80</label>
+                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="alcohol" max="8" min="0" name="alcohol" required="" step="0.1" type="range" value="{{params['alcohol']}}" x-model="alcohol" onchange="getNewPrediction(this)">
+                        </div>
+                        <div class="container p-1"  x-data="{ smoking: {{params['smoking']}} }">
+                            <label class="block mb-2 text-sm font-medium text-gray-900" for="smoking" x-text="`Smoking: ` + smoking">Smoking: 80</label>
+                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="smoking" max="25" min="0" name="smoking" required="" step="0.1" type="range" value="{{params['smoking']}}" x-model="smoking" onchange="getNewPrediction(this)">
+                        </div>
+                        <div class="container p-1"  x-data="{ sugar: {{params['sugar']}} }">
+                            <label class="block mb-2 text-sm font-medium text-gray-900" for="sugar" x-text="`Sugar: ` + sugar">Sugar: 80</label>
+                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="sugar" max="15" min="0" name="sugar" required="" step="0.1" type="range" value="{{params['sugar']}}" x-model="sugar" onchange="getNewPrediction(this)">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col  basis-1/2 pt-5 pl-5">
+                    <h1 id="initialPrediction" class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                        Lifespan prediction: {{prediction[0] | round(1)}}
+                    </h1>
+                    <h1 id="newPrediction" class="hidden text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                        New lifespan prediction: <span id="prediction">{{prediction[0] | round(1)}}</span> 
+                    </h1>
+                    <div class="container mt-10">
+                        <p id="massChange" class="text-md hidden"><span class="font-bold">Mass:</span> {{session['params'].get('mass') }} <span class="text-xl font-bold">&#8594</span> {{session['new_params'].get('mass')}} ({{(session['new_params'].get('mass') - session['params'].get('mass')) | round(1)}})</p>
+                    </div>
                 </div>
             </div>
-            <div class="container mx-auto">
-                Entered data:
-                <div class="flex flex-row">
-                    <div class="px-5">Genetic: {{ params['genetic']}}</div>
-                    <div class="px-5">Weight: {{ params['mass']}}</div>
-                    <div class="px-5">Length: {{ params['length']}}</div>
-                    <div class="px-5">BMI: {{ params['bmi']}}</div>
-                    <div class="px-5">Exercise: {{ params['exercise']}}</div>
-                    <div class="px-5">Alcohol: {{ params['alcohol']}}</div>
-                    <div class="px-5">Smoking: {{ params['smoking']}}</div>
-                    <div class="px-5">Sugar: {{ params['sugar']}}</div>
-                </div>
-            </div>
+            
             
         </div>
     </div>
