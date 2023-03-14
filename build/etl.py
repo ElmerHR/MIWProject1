@@ -1,7 +1,7 @@
 # import libraries
-from os import getcwd
 import sqlite3
 import pandas as pd
+import logging
 
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -18,23 +18,31 @@ def create_connection(db_file):
 
     return conn
 
+# Logging config
+FORMAT = '%(asctime)s | %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+
 # make connection to sqlite db
+logging.info("Creating connection to sqlite database...")
 conn = create_connection('build/data/db.sqlite3')
 
 # if connection has been succesfully established start extraction and transformation steps
 if conn is not None:
 
-    print("Making connection to database")
+    logging.info("Retrieving data from database...")
 
     # with active connection read database into pandas DataFrame using SQL statement
     df = pd.read_sql('SELECT * FROM rest_api_netlify', con=conn)
     
+    logging.info("Removing duplicates...")
     # remove duplicates
     df = df[~df.duplicated()]
 
+    logging.info("Dropping rows with missing data...")
     # drop rows with missing data
     df = df.dropna()
 
+    logging.info("Adding bmi as new future...")
     # Adding bmi as new feature [bmi = mass / length^2]
     df['bmi'] = round(df['mass'] / (df['length']/100)**2,1)
 
@@ -47,6 +55,7 @@ if conn is not None:
     IQR = Q3 - Q1
     df_iqr_cleaned = df_cleaned[~((df_cleaned < (Q1 - 1.5 * IQR)) |(df_cleaned > (Q3 + 1.5 * IQR))).any(axis=1)]
 
+    logging.info("Saving cleaned data to sqlite3 and csv files...")
     # save dataframes to sqlite3 table, replace data if table already exists
     df_cleaned.to_sql('data_cleaned', con=conn, index=False, if_exists='replace')
     df_iqr_cleaned.to_sql('data_iqr_cleaned', con=conn, index=False, if_exists='replace')
@@ -59,5 +68,5 @@ if conn is not None:
     
 # if connections cannot be established, print message to user
 else:
-    print("Error! Cannot create the database connection.")
+    logging.error("Error! Cannot create the database connection.")
 
