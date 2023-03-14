@@ -10,9 +10,9 @@ app = Flask(__name__)
 # TODO: put key in environment variable
 app.config['SECRET_KEY'] = 'ebc72148568923ee1fdd713b4a247f4c97548a11a409fbfc'
 
-# load the pipeline from disk
+# load the model from disk
 filename = 'finalized_model.pkl'
-pipe = pickle.load(open(filename, 'rb'))
+model = pickle.load(open(filename, 'rb'))
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -49,7 +49,7 @@ def predict():
     print(params_df)
  
    
-    prediction = pipe.predict(params_df)
+    prediction = model.predict(params_df)
     ic(prediction)
     return render_template('predict.html', params=params, prediction=prediction)
 
@@ -77,7 +77,7 @@ def ajax_request():
     params_df = pd.DataFrame(params_copied, index=[0])
     params_df = params_df.reindex(columns=['genetic', 'length', 'bmi', 'exercise', 'smoking', 'alcohol', 'sugar', 'mass_square', 'bmi_square', 'exercise_sqrt'])
     print(params_df)
-    prediction = pipe.predict(params_df)
+    prediction = model.predict(params_df)
     return jsonify(prediction=round(prediction[0], 1))
 
 if __name__ == "__main__":
