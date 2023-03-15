@@ -37,13 +37,57 @@ def makeCLI():
     enter_params = "Enter the following parameters to predict the lifespan:"
     print(f"{Fore.LIGHTRED_EX}{enter_params}")
 
-    genetic = click.prompt('Patient\'s genetic age | default:', type=int, default=85)
-    length = click.prompt('Patient\'s length in cm | default:', type=float, default=185)
-    mass = click.prompt('Patient\'s weight in kg | default:', type=float, default=80)
-    exercise = click.prompt('Patient\'s exercise in hr/day | default:', type=float, default=2)
-    alcohol = click.prompt('Patient\'s alcohol in glasses/day | default:', type=float, default=0)
-    smoking = click.prompt('Patient\'s smoking in sigarettes/day| default:', type=float, default=0)
-    sugar = click.prompt('Patient\'s sugar in cubes/day | default:', type=float, default=4)
+    # Define allowed ranges for user input
+    genetic_range = (60, 110)
+    length_range = (150, 215)
+    mass_range = (50, 165)
+    exercise_range = (0, 8)
+    alcohol_range = (0, 10)
+    smoking_range = (0, 25)
+    sugar_range = (0, 15)
+
+    while True:
+        genetic = click.prompt('Patient\'s genetic age | default:', type=int, default=85)
+        if genetic in range(genetic_range[0], genetic_range[1]):
+            break
+        else:
+            click.echo(f"Please provide a number between {str(genetic_range[0])} and {str(genetic_range[1])}.")
+    while True:
+        length = click.prompt('Patient\'s length in cm | default:', type=float, default=185)
+        if length in range(length_range[0], length_range[1]):
+            break
+        else:
+            click.echo(f"Please provide a number between {str(length_range[0])} and {str(length_range[1])}.")
+    while True:
+        mass = click.prompt('Patient\'s weight in kg | default:', type=float, default=80)
+        if mass in range(mass_range[0], mass_range[1]):
+            break
+        else:
+            click.echo(f"Please provide a number between {str(mass_range[0])} and {str(mass_range[1])}.")
+    while True:
+        exercise = click.prompt('Patient\'s exercise in hr/day | default:', type=float, default=2)
+        if exercise in range(exercise_range[0], exercise_range[1]):
+            break
+        else:
+            click.echo(f"Please provide a number between {str(exercise_range[0])} and {str(exercise_range[1])}.")
+    while True:
+        alcohol = click.prompt('Patient\'s alcohol in glasses/day | default:', type=float, default=0)
+        if alcohol in range(alcohol_range[0], alcohol_range[1]):
+            break
+        else:
+            click.echo(f"Please provide a number between {str(alcohol_range[0])} and {str(alcohol_range[1])}.")
+    while True:
+        smoking = click.prompt('Patient\'s smoking in sigarettes/day| default:', type=float, default=0)
+        if smoking in range(smoking_range[0], smoking_range[1]):
+            break
+        else:
+            click.echo(f"Please provide a number between {str(smoking_range[0])} and {str(smoking_range[1])}.")
+    while True:
+        sugar = click.prompt('Patient\'s sugar in cubes/day | default:', type=float, default=4)
+        if sugar in range(sugar_range[0], sugar_range[1]):
+            break
+        else:
+            click.echo(f"Please provide a number between {str(sugar_range[0])} and {str(sugar_range[1])}.")
     
     # save params to dict
     params = {
