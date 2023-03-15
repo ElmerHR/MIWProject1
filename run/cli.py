@@ -61,11 +61,11 @@ def makeCLI():
     entered_parameters = dict()
     parameters_prompts['genetic'] = ["genetic age", (60, 110), 85]
     parameters_prompts['length'] = ["length in cm", (150, 215), 185]
-    parameters_prompts['mass'] = ["Weight in kg", (50, 165), 80]
-    parameters_prompts['exercise'] = ["Exercise in hr/day", (0, 8), 2]
-    parameters_prompts['alcohol'] = ["Alcohol in glasses/day", (0, 10), 0]
-    parameters_prompts['smoking'] = ["Smoking in cig./day", (0, 25), 0]
-    parameters_prompts['sugar'] = ["Sugar in cubes/day", (0, 15), 4]
+    parameters_prompts['mass'] = ["weight in kg", (50, 165), 80]
+    parameters_prompts['exercise'] = ["exercise in hr/day", (0, 8), 2]
+    parameters_prompts['alcohol'] = ["alcohol in glasses/day", (0, 10), 0]
+    parameters_prompts['smoking'] = ["smoking in cig./day", (0, 25), 0]
+    parameters_prompts['sugar'] = ["sugar in cubes/day", (0, 15), 4]
     
     # loop over all parameters to prompt to user
     for k, v in parameters_prompts.items():
