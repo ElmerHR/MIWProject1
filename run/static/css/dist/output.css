@@ -1280,20 +1280,16 @@ input:checked + .toggle-bg {
   margin-right: 0.5rem;
 }
 
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
 
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mt-10 {
-  margin-top: 2.5rem;
-}
-
-.mt-20 {
-  margin-top: 5rem;
 }
 
 .block {
@@ -1416,6 +1412,16 @@ input:checked + .toggle-bg {
 
 .transform-none {
   transform: none;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .cursor-default {
@@ -1817,6 +1823,10 @@ input:checked + .toggle-bg {
 
 .animation-new-prediction {
   animation: fade-in 1.1s ease-in-out 1 normal forwards;
+}
+
+.animate-pulse {
+  animation: pulse 0.2s cubic-bezier(0.4, 0, 0.6, 1) 3;
 }
 
 @keyframes fade-in-move-down {

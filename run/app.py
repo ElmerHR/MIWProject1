@@ -78,7 +78,9 @@ def ajax_request():
     params_df = params_df.reindex(columns=['genetic', 'length', 'bmi', 'exercise', 'smoking', 'alcohol', 'sugar', 'mass_square', 'bmi_square', 'exercise_sqrt'])
     print(params_df)
     prediction = model.predict(params_df)
-    return jsonify(prediction=round(prediction[0], 1))
+    new_param = session['new_params'].get(ajax_param_name)
+    old_param = session['params'].get(ajax_param_name)
+    return jsonify(prediction=round(prediction[0], 1), new_param=new_param, old_param=old_param)
 
 if __name__ == "__main__":
     app.run()

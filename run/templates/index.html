@@ -21,7 +21,29 @@
             const labels = document.querySelectorAll('form label');
             // Change label innerHTML to label without numeric value
             labels.forEach((label) => {
-                label.innerHTML = label.htmlFor.charAt(0).toUpperCase() + label.htmlFor.slice(1);
+                switch(label.htmlFor) {
+                    case 'genetic':
+                        label.innerHTML = "Genetic age [yr]: ";
+                        break;
+                    case 'length':
+                        label.innerHTML = "Length [cm]: ";
+                        break;
+                    case 'mass':
+                        label.innerHTML = "Weight [kg]: ";
+                        break;
+                    case 'exercise':
+                        label.innerHTML = "Exercise [hr/day]: ";
+                        break;
+                    case 'alcohol':
+                        label.innerHTML = "Alcohol [glasses/day]: ";
+                        break;
+                    case 'smoking':
+                        label.innerHTML = "Smoking [cig./day]: ";
+                        break;
+                    case 'sugar':
+                        label.innerHTML = "Sugar [cubes/day]: ";
+                        break;    
+                }
             });
         } else {
             // if not checked: change form from manual input to range sliders
@@ -36,7 +58,29 @@
             const labels = document.querySelectorAll('form label');
             // Change label innerHTML to label with numeric value
             labels.forEach((label) => {
-                label.innerHTML = label.htmlFor.charAt(0).toUpperCase() + label.htmlFor.slice(1) + ": " + label.parentNode.querySelector('input').value;
+                switch(label.htmlFor) {
+                    case 'genetic':
+                        label.innerHTML = "Genetic age [yr]: " + label.parentNode.querySelector('input').value;;
+                        break;
+                    case 'length':
+                        label.innerHTML = "Length [cm]: " + label.parentNode.querySelector('input').value;;
+                        break;
+                    case 'mass':
+                        label.innerHTML = "Weight [kg]: " + label.parentNode.querySelector('input').value;;
+                        break;
+                    case 'exercise':
+                        label.innerHTML = "Exercise [hr/day]: " + label.parentNode.querySelector('input').value;;
+                        break;
+                    case 'alcohol':
+                        label.innerHTML = "Alcohol [glasses/day]: " + label.parentNode.querySelector('input').value;;
+                        break;
+                    case 'smoking':
+                        label.innerHTML = "Smoking [cig./day]: " + label.parentNode.querySelector('input').value;;
+                        break;
+                    case 'sugar':
+                        label.innerHTML = "Sugar [cubes/day]: " + label.parentNode.querySelector('input').value;;
+                        break;    
+                }
             });
         }
     });
@@ -73,25 +117,25 @@
                     {{ form.csrf_token }}
                     <div class="grid gap-4 grid-cols-1 grid-rows-7 md:grid-cols-2 md:grid-rows-4">
                         <div x-data="{ genetic: 80 }">
-                            {{ form.genetic.label(form.genetic.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Genetic: ` + genetic'}) }} {{ form.genetic(min=60, max=120, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'genetic'}) }}
+                            {{ form.genetic.label(form.genetic.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Genetic age [yr]: ` + genetic'}) }} {{ form.genetic(min=60, max=110, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'genetic'}) }}
                         </div>
                         <div x-data="{ length: 180 }">
-                            {{ form.length.label(form.length.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Length: ` + length'}) }} {{ form.length(min=150, max=240, step=1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'length'}) }}
+                            {{ form.length.label(form.length.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Length [cm]: ` + length'}) }} {{ form.length(min=150, max=215, step=1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'length'}) }}
                         </div>
                         <div x-data="{ mass: 80 }">
-                            {{ form.mass.label(form.mass.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Mass: ` + mass'}) }} {{ form.mass(min=50, max=180, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'mass'}) }}
+                            {{ form.mass.label(form.mass.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Weight [kg]: ` + mass'}) }} {{ form.mass(min=50, max=165, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'mass'}) }}
                         </div>
                         <div x-data="{ exercise: 2 }">
-                            {{ form.exercise.label(form.exercise.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Exercise: ` + exercise'}) }} {{ form.exercise(min=0, max=6, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'exercise'}) }}
+                            {{ form.exercise.label(form.exercise.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Exercise [hr/day]: ` + exercise'}) }} {{ form.exercise(min=0, max=8, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'exercise'}) }}
                         </div>
                         <div x-data="{ smoking: 0 }">
-                            {{ form.smoking.label(form.smoking.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Smoking: ` + smoking'}) }} {{ form.smoking(min=0, max=25, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'smoking'}) }}
+                            {{ form.smoking.label(form.smoking.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Smoking [cig./day]: ` + smoking'}) }} {{ form.smoking(min=0, max=25, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'smoking'}) }}
                         </div>
                         <div x-data="{ alcohol: 0 }">
-                            {{ form.alcohol.label(form.alcohol.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Alcohol: ` + alcohol'}) }} {{ form.alcohol(min=0, max=8, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'alcohol'}) }}
+                            {{ form.alcohol.label(form.alcohol.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Alcohol [glasses/day]: ` + alcohol'}) }} {{ form.alcohol(min=0, max=10, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'alcohol'}) }}
                         </div>
                         <div x-data="{ sugar: 7 }">
-                            {{ form.sugar.label(form.sugar.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Sugar: ` + sugar'}) }} {{ form.sugar(min=0, max=15, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'sugar'}) }}
+                            {{ form.sugar.label(form.sugar.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Sugar [cubes/day]: ` + sugar'}) }} {{ form.sugar(min=0, max=15, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'sugar'}) }}
                         </div>
                     </div>
                     <button type="submit" class="w-full text-white bg-violet-600 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Predict lifespan</button>
