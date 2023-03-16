@@ -12,7 +12,7 @@ FORMAT = '%(asctime)s | %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 logging.info('Reading cleaned data from csv file...')
-df_cleaned = pd.read_csv('data/data_cleaned.csv')
+df_cleaned = pd.read_csv('build/data/data_cleaned.csv')
 
 logging.info('Creating power transforms of mass, bmi and exercise...')
 df_cleaned["mass_square"] = df_cleaned['mass']**2
@@ -35,7 +35,6 @@ logging.info('Fitting model with train data...')
 pipe.fit(X_train, y_train)
 
 logging.info('Pickle trained model...')
-filename = 'data/finalized_model.pkl'
+filename = 'build/data/finalized_model.pkl'
 logging.info('Saved pickled model to "finalized_model.pkl"...')
 pickle.dump(pipe, open(filename, 'wb'))
- 
