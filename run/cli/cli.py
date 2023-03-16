@@ -18,7 +18,7 @@ logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 # load the pipeline from disk
 logging.info("Loading model from file...")
-filename = 'finalized_model.pkl'
+filename = 'data/finalized_model.pkl'
 model = pickle.load(open(filename, 'rb'))
 
 def prompt_param(message, acceptable_range, input_type, default):

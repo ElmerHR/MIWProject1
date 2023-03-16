@@ -1,4 +1,4 @@
 **/*.Identifier
-run/__pycache__
-run/node_modules
+**/__pycache__
+run/flask/node_modules
 package-lock.json

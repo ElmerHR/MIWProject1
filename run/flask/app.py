@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ebc72148568923ee1fdd713b4a247f4c97548a11a409fbfc'
 
 # load the model from disk
-filename = 'finalized_model.pkl'
+filename = 'data/finalized_model.pkl'
 model = pickle.load(open(filename, 'rb'))
 
 # route to index page with form to enter parameters for prediction
