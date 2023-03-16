@@ -10,6 +10,8 @@ conda create --name <env> --file conda_requirements.txt
 
 conda activate <env>
 
+pip install -r pip_requirements.txt
+
 python build/etl.py
 ```
 ### **Regression modeling**
@@ -18,6 +20,8 @@ Run the below commands where \<env> is substituted by your chosen environment na
 conda create --name <env> --file conda_requirements.txt
 
 conda activate <env>
+
+pip install -r pip_requirements.txt
 
 python build/regression.py
 ```
@@ -31,6 +35,8 @@ conda create --name <env> --file conda_requirements.txt
 
 conda activate <env>
 
+pip install -r pip_requirements.txt
+
 python run/cli/cli.py
 ```
 
@@ -40,6 +46,8 @@ Run the below commands where \<env> is substituted by your chosen environment na
 conda create --name <env> --file conda_requirements.txt
 
 conda activate <env>
+
+pip install -r pip_requirements.txt
 
 cd run/flask && flask run
 ```
