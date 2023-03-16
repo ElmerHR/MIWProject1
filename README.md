@@ -2,6 +2,15 @@
 ### Student: Elmer van den Dries
 <br>
 
+# Cloning the repository
+Clone the repo to a folder of your choosing on your local machine:
+
+```bash
+git clone git@github.com:ElmerHR/MIWProject1.git
+
+cd MIWProject1
+```
+
 # How to run the "build" folder?
 ### **ETL**
 Run the below commands where \<env> is substituted by your chosen environment name:
