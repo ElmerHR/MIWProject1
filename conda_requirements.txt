@@ -6,6 +6,7 @@ _openmp_mutex=5.1=1_gnu
 anyio=3.5.0=py310h06a4308_0
 argon2-cffi=21.3.0=pyhd3eb1b0_0
 argon2-cffi-bindings=21.2.0=py310h7f8727e_0
+art=5.8=pypi_0
 asttokens=2.0.5=pyhd3eb1b0_0
 attrs=22.1.0=py310h06a4308_0
 babel=2.11.0=py310h06a4308_0
