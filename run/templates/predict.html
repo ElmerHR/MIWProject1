@@ -16,18 +16,24 @@
                 else
                 {
                     var response = JSON.parse(req.responseText)
-                    document.getElementById('prediction').innerHTML = response['prediction'];
+                    var initialPrediction = document.getElementById('initalPredictionValue').innerHTML;
+                    var differencePrediction = (response['prediction'] - initialPrediction).toFixed(1);
+                    var differencePredictionString = String(differencePrediction);
+                    if(differencePrediction > 0) {
+                        differencePredictionString = '+'+differencePredictionString;
+                    };
+                    document.getElementById('newPredictionValue').innerHTML = response['prediction'] + ' (' + differencePredictionString + ')';
                     document.getElementById('initialPrediction').classList.add('animation-initial-prediction');
                     document.getElementById('newPrediction').classList.remove('hidden');
                     document.getElementById('newPrediction').classList.add('animation-new-prediction');
                     document.querySelector("#"+param.name+"Change > .oldParam").innerHTML = response['old_param'];
                     document.querySelector("#"+param.name+"Change > .newParam").innerHTML = response['new_param'];
-                    var difference = Math.round(response['new_param'] - response['old_param'], 1);
-                    var difference_string = String(difference);
+                    var difference = (response['new_param'] - response['old_param']).toFixed(1);
+                    var differenceString = String(difference);
                     if(difference > 0) {
-                        difference_string = '+'+difference_string;
+                        differenceString = '+'+differenceString;
                     };
-                    document.querySelector("#"+param.name+"Change > .difference").innerHTML = difference_string;
+                    document.querySelector("#"+param.name+"Change > .difference").innerHTML = differenceString;
                     document.getElementById(param.name+'Change').classList.remove('hidden');
                     var content = document.getElementById(param.name+'Change');
                     var parent = content.parentNode;
@@ -91,12 +97,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col  basis-1/2 pt-5 pl-5">
+                <div class="flex flex-col  basis-1/2 pt-5 pl-5 relative">
                     <h1 id="initialPrediction" class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                        Lifespan prediction: {{prediction[0] | round(1)}}
+                        Lifespan prediction: <span id="initalPredictionValue">{{prediction[0] | round(1)}}</span>
                     </h1>
                     <h1 id="newPrediction" class="hidden text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                        New lifespan prediction: <span id="prediction">{{prediction[0] | round(1)}}</span> 
+                        New lifespan prediction: <span id="newPredictionValue">{{prediction[0] | round(1)}}</span> 
                     </h1>
                     <div class="container mt-10">
                         <p id="massChange" class="text-md hidden"><span class="font-bold">Weight:</span> <span class="oldParam">{{session['params'].get('mass') }}</span> <span class="text-xl font-bold">&#8594</span> <span class="newParam">{{session['new_params'].get('mass')}}</span> (<span class="difference">{{(session['new_params'].get('mass') - session['params'].get('mass')) | round(1)}}</span>)</p>
@@ -104,6 +110,9 @@
                         <p id="alcoholChange" class="text-md hidden"><span class="font-bold">Alcohol:</span> <span class="oldParam">{{session['params'].get('alcohol') }}</span> <span class="text-xl font-bold">&#8594</span> <span class="newParam">{{session['new_params'].get('alcohol')}}</span> (<span class="difference">{{(session['new_params'].get('alcohol') - session['params'].get('alcohol')) | round(1)}}</span>)</p>
                         <p id="smokingChange" class="text-md hidden"><span class="font-bold">Smoking:</span> <span class="oldParam">{{session['params'].get('smoking') }}</span> <span class="text-xl font-bold">&#8594</span> <span class="newParam">{{session['new_params'].get('smoking')}}</span> (<span class="difference">{{(session['new_params'].get('smoking') - session['params'].get('smoking')) | round(1)}}</span>)</p>
                         <p id="sugarChange" class="text-md hidden"><span class="font-bold">Sugar:</span> <span class="oldParam">{{session['params'].get('sugar') }}</span> <span class="text-xl font-bold">&#8594</span> <span class="newParam">{{session['new_params'].get('sugar')}}</span> (<span class="difference">{{(session['new_params'].get('sugar') - session['params'].get('sugar')) | round(1)}}</span>)</p>
+                    </div>
+                    <div class="absolute bottom-0 right-0 mr-5">
+                        <a href="{{url_for('index')}}"" type="button" class="w-full text-white bg-violet-600 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Go Back</a>
                     </div>
                 </div>
             </div>
