@@ -1,3 +1,4 @@
+# import libraries
 import click
 from art import text2art
 from colorama import Fore
@@ -5,22 +6,28 @@ from colorama import init as colorama_init
 import numpy as np
 import pandas as pd
 import pickle
+import logging
 
 """ CLI app using click and art libraries """
-
 # init colorama
 colorama_init(autoreset=True)
 
+# Logging config
+FORMAT = '%(asctime)s | %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+
 # load the pipeline from disk
+logging.info("Loading model from file...")
 filename = 'finalized_model.pkl'
 model = pickle.load(open(filename, 'rb'))
 
-def prompt_param(message, acceptable_range, default):
+def prompt_param(message, acceptable_range, input_type, default):
     """Function to prompt for parameters
 
     Args:
         message (str): message to show in prompt
         acceptable_range (tuple(int, int)): acceptable range for input
+        input_type (type): type to accept as input
         default (int): default value to accept as prompt
 
     Returns:
@@ -28,9 +35,11 @@ def prompt_param(message, acceptable_range, default):
     """
 
     while True:
-        param = click.prompt(f'Patient\'s {message} | default:', type=int, default=default)
-        if param in range(acceptable_range[0], acceptable_range[1]):
+        param = click.prompt(f'Patient\'s {message} | default:', type=input_type, default=default)
+        # check if input is in predefined range
+        if acceptable_range[0] <= param <= acceptable_range[1]:
             break
+        # else ask user to provide input in between range
         else:
             click.echo(f"Please provide a number between {str(acceptable_range[0])} and {str(acceptable_range[1])}.")
     return float(param)
@@ -38,13 +47,12 @@ def prompt_param(message, acceptable_range, default):
 # init and run click
 @click.command()
 def makeCLI():
+    """Creating the CLI app"""
      # Compose and format output text
-    artl1 = text2art("Welcome  to...", font='small',)
-    artl2 = text2art("make it work", font='c_ascii')
-    artl3 = text2art("Project  1", font='small')
+    artl1 = text2art("Make IT Work", font='small',)
+    artl2 = text2art("health app", font='c_ascii')
     print(f"{Fore.BLUE}{artl1}")
     print(f"{Fore.BLUE}{artl2}")
-    print(f"{Fore.BLUE}{artl3}")
 
     # Ask for user to continue
     click.pause()
@@ -59,17 +67,17 @@ def makeCLI():
     # Define allowed ranges for user input
     parameters_prompts = dict()
     entered_parameters = dict()
-    parameters_prompts['genetic'] = ["genetic age", (60, 110), 85]
-    parameters_prompts['length'] = ["length in cm", (150, 215), 185]
-    parameters_prompts['mass'] = ["weight in kg", (50, 165), 80]
-    parameters_prompts['exercise'] = ["exercise in hr/day", (0, 8), 2]
-    parameters_prompts['alcohol'] = ["alcohol in glasses/day", (0, 10), 0]
-    parameters_prompts['smoking'] = ["smoking in cig./day", (0, 25), 0]
-    parameters_prompts['sugar'] = ["sugar in cubes/day", (0, 15), 4]
+    parameters_prompts['genetic'] = ["genetic age", (60, 110), int, 85]
+    parameters_prompts['length'] = ["length in cm", (150, 215), int, 185]
+    parameters_prompts['mass'] = ["weight in kg", (50, 165), float, 80]
+    parameters_prompts['exercise'] = ["exercise in hr/day", (0, 8), float, 2]
+    parameters_prompts['alcohol'] = ["alcohol in glasses/day", (0, 10), float, 0]
+    parameters_prompts['smoking'] = ["smoking in cig./day", (0, 25), float, 0]
+    parameters_prompts['sugar'] = ["sugar in cubes/day", (0, 15), float, 4]
     
     # loop over all parameters to prompt to user
     for k, v in parameters_prompts.items():
-        entered_parameters[k] = prompt_param(v[0], v[1], v[2])
+        entered_parameters[k] = prompt_param(v[0], v[1], v[2], v[3])
     
     # Calculate bmi and power transforms
     entered_parameters['bmi'] = entered_parameters['mass'] / (entered_parameters['length']/100)**2
@@ -87,8 +95,9 @@ def makeCLI():
     params_df = params_df.reindex(columns=['genetic', 'length', 'bmi', 'exercise', 'smoking', 'alcohol', 'sugar', 'mass_square', 'bmi_square', 'exercise_sqrt'])
     
     # make a prediction based on the parameters given by the user
-    prediction = model.predict(params_df)
     
+    prediction = model.predict(params_df)
+    logging.info("Making a prediction...")
     # send the prediction back to the user
     click.echo(f"\nBased on the given parameters, the predicted lifespan is: \033[1m{Fore.GREEN}{round(prediction[0], 1)}\033[1m")
 
