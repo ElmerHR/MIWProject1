@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import DecimalRangeField
 from wtforms.validators import NumberRange
-from wtforms.validators import DataRequired, InputRequired
+from wtforms.validators import InputRequired
 
 # Class to create Flask form to retrieve parameters for making lifespan predictions
 class getLifespanForm(FlaskForm):

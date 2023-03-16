@@ -3,58 +3,80 @@
 
 {% block js %}
 <script>
+    // function to get new prediction using AJAX call to flask backend
     function getNewPrediction(param){
+        // make ajax call
         var req = new XMLHttpRequest()
+        // logic to handle response of ajax call
         req.onreadystatechange = function()
         {
+            // check if request state is DONE (readyState == 4)
             if (req.readyState == 4)
             {
+                // check if request is succesfull
                 if (req.status != 200)
                 {
-                    //error handling code here
+                    console.log("Oops something went wrong here...!");
                 }
                 else
                 {
+                    // parse response to JSON
                     var response = JSON.parse(req.responseText)
+                    // get initial prediction value
                     var initialPrediction = document.getElementById('initalPredictionValue').innerHTML;
+                    // calculate difference between new prediction and init prediction
                     var differencePrediction = (response['prediction'] - initialPrediction).toFixed(1);
+                    // change difference prediction to String
                     var differencePredictionString = String(differencePrediction);
+                    // if difference is positive add a plus in front of the string
                     if(differencePrediction > 0) {
                         differencePredictionString = '+'+differencePredictionString;
                     };
+                    // print the new prediction including the difference
                     document.getElementById('newPredictionValue').innerHTML = response['prediction'] + ' (' + differencePredictionString + ')';
+                    // add animation class to initial prediction to have it shift up and change its opacity
                     document.getElementById('initialPrediction').classList.add('animation-initial-prediction');
+                    // make the new prediction visible
                     document.getElementById('newPrediction').classList.remove('hidden');
+                    // add animation class to new prediction to have it shift up and gradually increase its opacity
                     document.getElementById('newPrediction').classList.add('animation-new-prediction');
+                    // report the change of the parameter with the slider on the page
                     document.querySelector("#"+param.name+"Change > .oldParam").innerHTML = response['old_param'];
                     document.querySelector("#"+param.name+"Change > .newParam").innerHTML = response['new_param'];
+                    // calculate difference between new value and initial value
                     var difference = (response['new_param'] - response['old_param']).toFixed(1);
+                    // turn it into a string
                     var differenceString = String(difference);
+                    // if value is positive, add a '+' in front of it
                     if(difference > 0) {
                         differenceString = '+'+differenceString;
                     };
+                    // add the difference to the page
                     document.querySelector("#"+param.name+"Change > .difference").innerHTML = differenceString;
+                    // make the item visible on the page
                     document.getElementById(param.name+'Change').classList.remove('hidden');
+                    // change the order of the item so it appears at the top of the section highlighting the changes
                     var content = document.getElementById(param.name+'Change');
                     var parent = content.parentNode;
                     parent.insertBefore(content, parent.firstChild);
+                    // add animation to show the user a change was made
                     document.getElementById(param.name+'Change').classList.add('animate-pulse');
                 }
             }
         }
-    
+        // make the ajax call
         req.open('POST', '/ajax_prediction')
+        // set correct headers for the ajax call
         req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        // add parameters as attributes to the URL
         var parameter_name = param.name
         var parameter_value = param.value
         var postVars = 'parameter_name='+parameter_name+'&parameter_value='+parameter_value
+        // make a request to the backend
         req.send(postVars)
         
         return false
     }
-    
-
-
 </script>
 {% endblock %}
 
