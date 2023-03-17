@@ -9,7 +9,7 @@ from sklearn.pipeline import Pipeline
 
 # Logging config
 FORMAT = '%(asctime)s | %(message)s'
-logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 logging.info('Reading cleaned data from csv file...')
 df_cleaned = pd.read_csv('build/data/data_cleaned.csv')

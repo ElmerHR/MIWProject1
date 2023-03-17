@@ -14,7 +14,7 @@ colorama_init(autoreset=True)
 
 # Logging config
 FORMAT = '%(asctime)s | %(message)s'
-logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 # load the pipeline from disk
 logging.info("Loading model from file...")

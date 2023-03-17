@@ -20,7 +20,7 @@ def create_connection(db_file):
 
 # Logging config
 FORMAT = '%(asctime)s | %(message)s'
-logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 # make connection to sqlite db
 logging.info("Creating connection to sqlite database...")
