@@ -71,8 +71,8 @@ def makeCLI():
     parameters_prompts['length'] = ["length in cm", (150, 215), int, 185]
     parameters_prompts['mass'] = ["weight in kg", (50, 165), float, 80]
     parameters_prompts['exercise'] = ["exercise in hr/day", (0, 8), float, 2]
-    parameters_prompts['alcohol'] = ["alcohol in glasses/day", (0, 10), float, 0]
-    parameters_prompts['smoking'] = ["smoking in cig./day", (0, 25), float, 0]
+    parameters_prompts['alcohol'] = ["alcohol in glasses/day", (0, 10), int, 0]
+    parameters_prompts['smoking'] = ["smoking in cig./day", (0, 25), int, 0]
     parameters_prompts['sugar'] = ["sugar in cubes/day", (0, 15), float, 4]
     
     # loop over all parameters to prompt to user
