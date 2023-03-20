@@ -1,4 +1,9 @@
 ### git log --all --oneline > git_history.txt ###
+a08790b Changed input to int for smoking and alcohol
+aa20001 Changed input to integer for smoking and alcohol
+006c5f0 Changed debugging to INFO level
+28b2776 Edited README.md
+2ed227d Edited git_history.txt
 af7b5fa Edited README.md
 cc62e90 Fixed conda and pip requirements
 5793b84 build: fixed data paths
