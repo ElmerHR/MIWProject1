@@ -107,11 +107,11 @@
                         </div>
                         <div class="container p-1"  x-data="{ alcohol: {{params['alcohol']}} }">
                             <label class="block mb-2 text-sm font-medium text-gray-900" for="alcohol" x-text="`Alcohol [glasses/day]: ` + alcohol">Alcohol: 80</label>
-                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="alcohol" max="8" min="0" name="alcohol" required="" step="0.1" type="range" value="{{params['alcohol']}}" x-model="alcohol" onchange="getNewPrediction(this)">
+                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="alcohol" max="8" min="0" name="alcohol" required="" step="1" type="range" value="{{params['alcohol']}}" x-model="alcohol" onchange="getNewPrediction(this)">
                         </div>
                         <div class="container p-1"  x-data="{ smoking: {{params['smoking']}} }">
                             <label class="block mb-2 text-sm font-medium text-gray-900" for="smoking" x-text="`Smoking [cig./day]: ` + smoking">Smoking: 80</label>
-                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="smoking" max="25" min="0" name="smoking" required="" step="0.1" type="range" value="{{params['smoking']}}" x-model="smoking" onchange="getNewPrediction(this)">
+                            <input class="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-2/3 p-2.5" id="smoking" max="25" min="0" name="smoking" required="" step="1" type="range" value="{{params['smoking']}}" x-model="smoking" onchange="getNewPrediction(this)">
                         </div>
                         <div class="container p-1"  x-data="{ sugar: {{params['sugar']}} }">
                             <label class="block mb-2 text-sm font-medium text-gray-900" for="sugar" x-text="`Sugar [cubes/day]: ` + sugar">Sugar: 80</label>

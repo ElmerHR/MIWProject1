@@ -129,12 +129,12 @@
                             {{ form.exercise.label(form.exercise.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Exercise [hr/day]: ` + exercise'}) }} {{ form.exercise(min=0, max=8, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'exercise'}) }}
                         </div>
                         <div x-data="{ smoking: 0 }">
-                            {{ form.smoking.label(form.smoking.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Smoking [cig./day]: ` + smoking'}) }} {{ form.smoking(min=0, max=25, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'smoking'}) }}
+                            {{ form.smoking.label(form.smoking.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Smoking [cig./day]: ` + smoking'}) }} {{ form.smoking(min=0, max=25, step=1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'smoking'}) }}
                         </div>
                         <div x-data="{ alcohol: 0 }">
-                            {{ form.alcohol.label(form.alcohol.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Alcohol [glasses/day]: ` + alcohol'}) }} {{ form.alcohol(min=0, max=10, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'alcohol'}) }}
+                            {{ form.alcohol.label(form.alcohol.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Alcohol [glasses/day]: ` + alcohol'}) }} {{ form.alcohol(min=0, max=10, step=1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'alcohol'}) }}
                         </div>
-                        <div x-data="{ sugar: 7 }">
+                        <div x-data="{ sugar: 4 }">
                             {{ form.sugar.label(form.sugar.label.text.title(), class_="block mb-2 text-sm font-medium text-gray-900", **{'x-text': '`Sugar [cubes/day]: ` + sugar'}) }} {{ form.sugar(min=0, max=15, step=0.1, class_="bg-gray-50 border border-gray-300 text-gray-900 accent-violet-600 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5", **{'x-model': 'sugar'}) }}
                         </div>
                     </div>
